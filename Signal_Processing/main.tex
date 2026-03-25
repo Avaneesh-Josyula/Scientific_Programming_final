@@ -1,0 +1,347 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{txfonts}
+\usepackage{tkz-euclide}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{gvv}
+\usepackage{lmodern}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+
+
+
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={%
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=2pt,
+  toprule=2pt,
+  colback=bg,
+  colframe=orange!70,
+  enhanced,
+  overlay={%
+    \begin{tcbclipinterior}
+    \fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3,
+}
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    commentstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    showstringspaces=false,
+}
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title %optional
+{Signal Processing-1.1.30}
+\date\today
+
+
+\author 
+{Josyula G S Avaneesh - EE25BTECH11030}
+
+
+
+\begin{document}
+
+
+
+\frame{\titlepage}
+\begin{frame}{Question}
+The frequency spectrum of a signal is shown in the figure. If this signal is ideally
+sampled at intervals of 1 ms, then the frequency spectrum of the sampled signal will
+be\\
+\begin{center}
+    \begin{circuitikz}
+        % Axes
+        \draw [->] (-2,0) -- (2.5,0) node[right] {$\omega$};
+        \draw [->] (0,0) -- (0,1.5) node[right] {$|U(j\omega)|$};
+        % Triangle Spectrum
+        \draw [thick] (-1,0) -- (0,1) -- (1,0);
+        % Label
+        \node at (1,-0.3) {1 kHz};
+    \end{circuitikz}
+\end{center}
+\begin{enumerate}
+    \item[(A)]
+    \begin{minipage}[c]{0.8\textwidth}
+        \begin{circuitikz}
+            \draw [->] (-3,0) -- (3,0) node[right] {$\omega$};
+            \draw [->] (0,0) -- (0,1.5) node[right] {$|U(j\omega)|$};
+            % Periodic triangles touching at edges
+            \draw [thick] (-3,0) -- (-2,1) -- (-1,0) -- (0,1) -- (1,0) -- (2,1) -- (3,0);
+        \end{circuitikz}
+    \end{minipage}
+\end{enumerate}
+
+
+\end{frame}
+
+\begin{frame}{Question}
+\begin{enumerate}
+    \item[(B)]
+    \begin{minipage}[c]{0.8\textwidth}
+        \begin{circuitikz}
+            \draw [->] (-3,0) -- (3,0) node[right] {$\omega$};
+            \draw [thick] (0,0) -- (0,1.5); % Vertical axis line
+            \draw [thick] (-2.8, 1) -- (2.8, 1); % Flat line
+        \end{circuitikz}
+    \end{minipage}
+
+    \item[(C)]
+    \begin{minipage}[c]{0.8\textwidth}
+        \begin{circuitikz}
+            \draw [->] (-3,0) -- (3,0) node[right] {$\omega$};
+            \draw [->] (0,0) -- (0,1.5);
+            \draw [thick] (-1,0) -- (0,1) -- (1,0);
+        \end{circuitikz}
+    \end{minipage}
+
+    \item[(D)]
+    \begin{minipage}[c]{0.8\textwidth}
+        \begin{circuitikz}
+            \draw [->] (-3,0) -- (3.5,0) node[right] {$\omega$};
+            \draw [->] (0,0) -- (0,1.5);
+            % Overlapping/Aliased "W" shapes
+            \draw [thick] (-1.5,0.8) -- (-1,0.4) -- (-0.5,0.8) -- (0,0.4) -- (0.5,0.8) -- (1,0.4) -- (1.5,0.8);
+        \end{circuitikz}
+    \end{minipage}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+
+\textbf{Step 1: Analyzing the Message Signal, $m(t)$}
+\begin{itemize}
+    \item \textbf{The Continuous Signal:} Let the original continuous-time analog signal be the message signal, $m(t)$. 
+    \item \textbf{The Frequency Spectrum:} The problem provides the frequency spectrum, $M(\omega)$, which is a triangle spanning symmetrically from $-1 \text{ kHz}$ to $+1 \text{ kHz}$.
+    \item \textbf{Maximum Frequency Component ($\omega_M$):} The signal is band-limited with a maximum linear frequency of $f_M = 1 \text{ kHz}$. Converting to angular frequency:
+    \[
+    \omega_M = 2\pi f_M = 2\pi(1000) \text{ rad/s}
+    \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution} 
+\textbf{Step 2: Defining the Sampler and Sampling Frequency ($\omega_s$)}
+\begin{itemize}
+    \item \textbf{The Impulse Train, $c(t)$:} To sample $m(t)$, it is multiplied by a periodic impulse train $c(t)$ with a sampling period $T_s$.
+    \item \textbf{Calculating $\omega_s$:} The given sampling interval is $T_s = 10^{-3} \text{ s}$. The sampling frequency, $\omega_s$, is:
+    \[
+    \omega_s = \frac{2\pi}{T_s} = 2\pi(1000) \text{ rad/s}
+    \]
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Theoretical Solution} 
+\textbf{Step 3: Constructing the Sampled Spectrum}
+\begin{itemize}
+    \item \textbf{Convolution in Frequency:} Multiplication in the time domain ($s(t) = m(t) \cdot c(t)$) becomes convolution in the frequency domain:
+    \[
+    S(\omega) = \frac{1}{2\pi} [M(\omega) * C(\omega)]
+    \]
+    \item \textbf{The Impulse Train in Frequency:} A fundamental property of the Fourier transform is that the transform of a periodic impulse train in time is another infinite impulse train in frequency. So, $C(\omega)$ is represented as:
+    \[
+    C(\omega) = \frac{2\pi}{T_s} \sum_{n=-\infty}^{\infty} \delta(\omega - n\omega_s)
+    \]
+    \item \textbf{The Sifting Property:} The Dirac delta function $\delta$ has a ``sifting'' property. When you convolve any spectrum $M(\omega)$ with a shifted impulse $\delta(\omega - \omega_0)$, it simply shifts the entire spectrum to that new center: $M(\omega) * \delta(\omega - \omega_0) = M(\omega - \omega_0)$.
+    
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\begin{itemize}
+\item \textbf{The Infinite Sum:} Substituting $C(\omega)$ into our convolution equation, the $\frac{1}{2\pi}$ and $2\pi$ terms cancel out. We apply the sifting property to every impulse in the infinite train, resulting in an infinite sum of shifted copies of the original spectrum:
+    \[
+    S(\omega) = \frac{1}{T_s} \sum_{n=-\infty}^{\infty} M(\omega - n\omega_s)
+    \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\begin{itemize}
+    \item \textbf{Placing the Replicas:} To visualize this, we evaluate the summation for different integers of $n$:
+    \begin{itemize}
+        \item \textbf{Baseband ($n=0$):} This term is $M(\omega)$. It is the exact original triangle centered at $0 \text{ rad/s}$, spanning from $-\omega_M$ to $+\omega_M$.
+        \item \textbf{First Positive Shift ($n=1$):} This term is $M(\omega - \omega_s)$. It is an identical copy of the triangle, but its center is shifted to $+\omega_s$. It spans from $(\omega_s - \omega_M)$ to $(\omega_s + \omega_M)$.
+        \item \textbf{First Negative Shift ($n=-1$):} This term is $M(\omega + \omega_s)$. It is centered at $-\omega_s$ and spans from $(-\omega_s - \omega_M)$ to $(-\omega_s + \omega_M)$.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{Step 4: Deriving the Nyquist Condition}
+\begin{itemize}
+    \item \textbf{The Goal (No Overlap):} To accurately recover the original signal, the baseband spectrum ($n=0$) must not mix or overlap with the shifted copies ($n=\pm 1, \pm 2, \dots$).
+    \item \textbf{Mathematical Derivation:} 
+    \begin{itemize}
+        \item The highest frequency of the $n=0$ baseband spectrum is at $+\omega_M$.
+        \item The lowest frequency of the adjacent $n=1$ shifted spectrum is at $(\omega_s - \omega_M)$.
+        \item To prevent overlap, the start of the next triangle must be strictly greater than or equal to the end of the baseband triangle. Therefore:
+        \[
+        \omega_s - \omega_M \ge \omega_M
+        \]
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\begin{itemize}
+    \item \textbf{The Nyquist Condition:} Solving the inequality above yields the fundamental rule of sampling:
+    \[
+    \omega_s \ge 2\omega_M
+    \]
+    If this condition is not met, the high frequencies fold back into the lower frequencies, causing irreversible distortion known as \textbf{aliasing}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{Step 5: Applying to the Problem and Visualizing the Result}
+\begin{itemize}
+    \item  Here, $\omega_s = \omega_M$. The sampling frequency is exactly half of what it needs to be, guaranteeing severe aliasing.
+    \item \textbf{Adding the Overlapping Regions:} Because $\omega_s = \omega_M$, the center of the $n=1$ triangle ($\omega_s$) falls exactly on the right edge of the $n=0$ triangle. The frequency band between $0$ and $\omega_s$:
+    \begin{itemize}
+        \item In this region, the $n=0$ triangle is a straight line sloping \textit{downward} from its peak to zero.
+        \item In the exact same region, the $n=1$ triangle is a straight line sloping \textit{upward} from zero to its peak.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+    \textbf{Final Conclusion:} Summing a linearly decreasing function with a linearly increasing function of the exact same slope magnitude yields a constant, flat line. Because the infinite summation $\sum_{n=-\infty}^{\infty}$ continues forever, these overlapping triangles create a continuous, flat horizontal line across the entire spectrum. This perfectly matches option \textbf{(B)}.
+
+    \textbf{Answer: B} 
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python Code}
+    \begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Define the frequency axis (from -3 kHz to 3 kHz for a good view)
+f = np.linspace(-3, 3, 1000)
+
+# 2. Define the original spectrum function (a triangle from -1 to 1)
+def original_spectrum(freq):
+    # Returns a triangle: max height 1 at center, hitting 0 at +/- 1
+    return np.maximum(1 - np.abs(freq), 0)
+
+# 3. Define the sampling frequency based on the problem
+fs = 1.0  # 1 kHz
+
+
+   
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python Code }
+    \begin{lstlisting}
+# 4. Create the shifted replicas
+# We will sum a few replicas (from n=-5 to n=5) to simulate the infinite sum
+sampled_spectrum = np.zeros_like(f)
+replicas = []
+
+n_values = range(-5, 6)
+for n in n_values:
+    # Shift the original spectrum by n * fs
+    shifted_triangle = original_spectrum(f - n * fs)
+    replicas.append(shifted_triangle)
+    sampled_spectrum += shifted_triangle
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python Code }
+    \begin{lstlisting}
+# 5. Plotting the results
+plt.figure(figsize=(10, 6))
+
+# Plot the individual shifted triangles (dashed lines)
+for i, replica in enumerate(replicas):
+    if i == 5: # n=0, the original baseband
+        plt.plot(f, replica, '--', color='blue', alpha=0.6, label='Individual Shifted Spectra')
+    else:
+        plt.plot(f, replica, '--', color='blue', alpha=0.6)
+
+# Plot the final summed spectrum (solid thick line)
+plt.plot(f, sampled_spectrum, '-', color='red', linewidth=3, label='Final Sampled Spectrum (Sum)')
+
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python Code }
+    \begin{lstlisting}
+# Formatting the plot
+plt.title('Frequency Spectrum of Ideally Sampled Signal ($f_s = 1$ kHz)')
+plt.xlabel('Frequency (kHz)')
+plt.ylabel('Amplitude')
+plt.xlim(-3, 3)
+plt.ylim(0, 1.5)
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.legend()
+
+# Show the plot
+plt.tight_layout()
+plt.savefig("plot.png")
+plt.show()
+   
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{Plot}
+    \centering
+    \includegraphics[width=\columnwidth, height=0.8\textheight, keepaspectratio]{plot.png}     
+\end{frame}
+
+
+\end{document}

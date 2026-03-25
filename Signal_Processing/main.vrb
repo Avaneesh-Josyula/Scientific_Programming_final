@@ -1,0 +1,17 @@
+\frametitle{Python Code }
+    \begin{lstlisting}
+# Formatting the plot
+plt.title('Frequency Spectrum of Ideally Sampled Signal ($f_s = 1$ kHz)')
+plt.xlabel('Frequency (kHz)')
+plt.ylabel('Amplitude')
+plt.xlim(-3, 3)
+plt.ylim(0, 1.5)
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.legend()
+
+# Show the plot
+plt.tight_layout()
+plt.savefig("plot.png")
+plt.show()
+
+\end{lstlisting}
