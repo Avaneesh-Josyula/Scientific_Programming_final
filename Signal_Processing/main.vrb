@@ -9,9 +9,8 @@ plt.ylim(0, 1.5)
 plt.grid(True, linestyle=':', alpha=0.7)
 plt.legend()
 
-# Show the plot
+# Displaying the figure
 plt.tight_layout()
-plt.savefig("plot.png")
+plt.savefig("../plot.png")
 plt.show()
-
 \end{lstlisting}
