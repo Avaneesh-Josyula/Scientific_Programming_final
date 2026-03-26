@@ -1,0 +1,14 @@
+\frametitle{Python Code }
+    \begin{lstlisting}
+# Formatting to make it readable and professional
+plt.title('Convergence of Probability: Drawing Two Aces (With Replacement)')
+plt.xlabel('Number of Trials (N) - Logarithmic Scale')
+plt.ylabel('Probability')
+plt.grid(True, which="both", linestyle="--", alpha=0.6) # Adds gridlines for both major and minor log ticks
+plt.legend()
+plt.savefig("../plot.png")
+
+# Display the plot
+plt.show()
+
+\end{lstlisting}
