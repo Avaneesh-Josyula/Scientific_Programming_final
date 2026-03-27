@@ -1,0 +1,240 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{txfonts}
+\usepackage{tkz-euclide}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{gvv}
+\usepackage{lmodern}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+
+
+
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={%
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=2pt,
+  toprule=2pt,
+  colback=bg,
+  colframe=orange!70,
+  enhanced,
+  overlay={%
+    \begin{tcbclipinterior}
+    \fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3,
+}
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    commentstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    showstringspaces=false,
+}
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title %optional
+{Signal Processing - 1.2.30}
+\date\today
+
+
+\author 
+{Josyula G S Avaneesh - EE25BTECH11030}
+
+
+
+\begin{document}
+
+
+\frame{\titlepage}
+\begin{frame}{Question}
+Suppose $y_p(x)=xcos(2x)$ is a particular solution of 
+$$y^{''} + \alpha y=sin(2x)$$
+
+Then the constant $\alpha$ equals:
+\begin{enumerate}
+    \item -4
+    \item -2
+    \item 2
+    \item 4
+\end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}{Theoretical Solution}
+We are given a second-order linear non-homogeneous differential equation:
+\begin{equation}
+    y'' + \alpha y = \sin(2x)
+\end{equation}
+Given that the particular solution is $y_p(x) = x\cos(2x)$, we must determine the value of the constant $\alpha$.
+
+\textbf{Step 1: Derivation of the Characteristic Equation}
+To understand the nature of the system, we first examine the homogeneous equation $y'' + \alpha y = 0$. This represents the system's natural behavior without external forcing.
+
+\textbf{1.The Exponential Substitution}
+We assume a solution of the form $y = e^{rx}$, where $r$ is a constant. We test this by finding the derivatives:
+\begin{itemize}
+    \item $y = e^{rx}$
+    \item $y' = r e^{rx}$
+    \item $y'' = r^2 e^{rx}$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{Step 2: Algebraic Reduction}
+Substituting these into the homogeneous equation:
+\begin{align*}
+    r^2 e^{rx} + \alpha e^{rx} &= 0 \\
+    e^{rx}(r^2 + \alpha) &= 0
+\end{align*}
+Since the exponential function $e^{rx}$ is never zero, the term in the parentheses must be zero. This gives us the \textbf{Characteristic Equation}:
+\begin{equation}
+    r^2 + \alpha = 0
+\end{equation}
+The roots are $r = \pm i\sqrt{\alpha}$, which correspond to a natural oscillation frequency of $\omega_0 = \sqrt{\alpha}$.
+
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{Mathematical Verification via Substitution}
+We verify the constant $\alpha$ by substituting the given particular solution $y_p(x) = x\cos(2x)$ directly into the original non-homogeneous equation.
+
+\textbf{1.Calculus of the Particular Solution}
+Using the product rule $\frac{d}{dx}[uv] = u'v + uv'$:
+\begin{align*}
+    y_p(x) &= x\cos(2x) \\
+    y_p'(x) &= \cos(2x) - 2x\sin(2x) \\
+    y_p''(x) &= -2\sin(2x) - [2\sin(2x) + 4x\cos(2x)] \\
+    y_p''(x) &= -4\sin(2x) - 4x\cos(2x)
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{2.Solving for $\alpha$}
+Substitute $y_p$ and $y_p''$ into $y'' + \alpha y = \sin(2x)$:
+\begin{equation*}
+    (-4\sin(2x) - 4x\cos(2x)) + \alpha(x\cos(2x)) = \sin(2x)
+\end{equation*}
+Group the terms involving $x\cos(2x)$:
+\begin{equation*}
+    -4\sin(2x) + (\alpha - 4)x\cos(2x) = \sin(2x)
+\end{equation*}
+For this equality to hold for all $x$, the coefficient of the $x\cos(2x)$ term must be zero:
+\begin{equation*}
+    \alpha - 4 = 0 \implies \alpha = 4
+\end{equation*}    
+\end{frame}
+
+\begin{frame}{Theoretical Solution}
+\textbf{Conceptual Analysis of Resonance:}
+The presence of the $x$ multiplier in $y_p(x) = x\cos(2x)$ is the mathematical signature of \textbf{Pure Resonance}. 
+
+
+
+Resonance occurs when the frequency of the external driving force ($\omega = 2$ from $\sin(2x)$) perfectly matches the natural frequency of the system ($\omega_0 = \sqrt{\alpha}$). When these frequencies match, the amplitude of the system grows linearly over time, represented by the $x$ term.
+\begin{equation*}
+    \text{Driving Frequency} = \text{Natural Frequency} \implies 2 = \sqrt{\alpha} \implies \alpha = 4
+\end{equation*}
+
+\section{Conclusion}
+By both direct substitution and resonance theory, we find that:
+\begin{equation*}
+    \alpha = 4
+\end{equation*}
+The correct option is \textbf{d}.
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{Python Code}
+    \begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+# Define system: y'' = sin(2x) - alpha*y
+def system(state, x, alpha):
+    y, v = state
+    dydx = v
+    dvdx = np.sin(2*x) - alpha * y
+    return [dydx, dvdx]
+    
+# Timeline and start state (at rest)
+x = np.linspace(0, 50, 1000)
+start = [0, 0]
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python Code}
+    \begin{lstlisting}
+# Solve for Non-resonance (Alpha=2) and Resonance (Alpha=4)
+y_non = odeint(system, start, x, args=(2,))[:, 0]
+y_resonant = odeint(system, start, x, args=(4,))[:, 0]
+
+# Plotting
+plt.figure(figsize=(10, 5))
+plt.plot(x, y_non, label='Alpha=2: Non-Resonance (Mismatch)', color='gray')
+plt.plot(x, y_resonant, label='Alpha=4: Resonant (Match)', color='red')
+
+plt.title('Amplitude Comparison: Mismatched vs. Matched Frequencies')
+plt.xlabel('x (Time)')
+plt.ylabel('y (Displacement)')
+plt.legend()
+plt.grid(True)
+plt.show()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Plot}
+    \centering
+    \includegraphics[width=\columnwidth, height=0.8\textheight, keepaspectratio]{plot.png}     
+\end{frame}
+
+
+\end{document}
