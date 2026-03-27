@@ -14,5 +14,6 @@ plt.xlabel('x (Time)')
 plt.ylabel('y (Displacement)')
 plt.legend()
 plt.grid(True)
+    plt.savefig("../plot.png")
 plt.show()
 \end{lstlisting}
